@@ -38,6 +38,7 @@ import TranslationSettings from './modalForms/translationSettings';
 import TranslationTable from './modalForms/translationTable';
 import SharingForm from './permissions/sharingForm';
 import RESTServicesForm from './RESTServices/RESTServicesForm';
+import UserForm from './modalForms/userForm';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -116,6 +117,10 @@ class Modal extends React.Component {
           title: t('Translations Table'),
           modalClass: 'modal--large'
         });
+        break;
+
+      case MODAL_TYPES.NEW_USER:
+        this.setModalTitle(t('Add Admin User'));
         break;
 
       default:
@@ -204,6 +209,9 @@ class Modal extends React.Component {
         className={this.state.modalClass}
       >
         <ui.Modal.Body>
+           { this.props.params.type == MODAL_TYPES.NEW_USER &&
+              <UserForm/>
+            }
             { this.props.params.type == MODAL_TYPES.SHARING &&
               <SharingForm uid={this.props.params.assetid} />
             }
@@ -213,6 +221,7 @@ class Modal extends React.Component {
                 onSetModalTitle={this.setModalTitle}
               />
             }
+
             { this.props.params.type == MODAL_TYPES.REPLACE_PROJECT &&
               <ProjectSettings
                 context={PROJECT_SETTINGS_CONTEXTS.REPLACE}

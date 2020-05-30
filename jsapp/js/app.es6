@@ -108,7 +108,7 @@ class App extends React.Component {
     }
 
     return (
-      <DocumentTitle title='KoBoToolbox'>
+      <DocumentTitle title='Admin Dashboard'>
         <Shortcuts
           name='APP_SHORTCUTS'
           handler={this._handleShortcuts}

@@ -62,6 +62,14 @@ class FormSidebar extends Reflux.Component {
       type: MODAL_TYPES.NEW_FORM
     });
   }
+
+  newUserModal (evt) {
+    evt.preventDefault();
+    stores.pageState.showModal({
+      type: MODAL_TYPES.NEW_USER
+    });
+  }
+
   render () {
     return (
       <bem.FormSidebar__wrapper>
@@ -69,6 +77,9 @@ class FormSidebar extends Reflux.Component {
           {t('new')}
         </button>
         <SidebarFormsList/>
+        <button onClick={this.newUserModal} className='new-user-button mdl-button mdl-button--raised mdl-button--colored'>
+          {t('new user')}
+        </button>
       </bem.FormSidebar__wrapper>
     );
   }

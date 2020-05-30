@@ -242,7 +242,7 @@ export class AccountSettings extends React.Component {
     };
 
     return (
-      <DocumentTitle title={`${accountName} | KoboToolbox`}>
+      <DocumentTitle title={`${accountName} | Admin Dashboard`}>
       <ui.Panel>
         <bem.AccountSettings>
           <bem.AccountSettings__actions>
