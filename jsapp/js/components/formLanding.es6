@@ -188,30 +188,30 @@ export class FormLanding extends React.Component {
           label: t('Online-Offline (multiple submission)'),
           desc: t('This allows online and offline submissions and is the best option for collecting data in the field. ')
         }],
-        ['url', {
-          label: t('Online-Only (multiple submissions)'),
-          desc: t('This is the best option when entering many records at once on a computer, e.g. for transcribing paper records.')
-        }],
-        ['single_url', {
-          label: t('Online-Only (single submission)'),
-          desc: t('This allows a single submission, and can be paired with the "returnURL" parameter to redirect the user to a URL of your choice after the form has been submitted.')
-        }],
-        ['single_once_url', {
-          label: t('Online-only (once per respondent)'),
-          desc: t('This allows your web form to only be submitted once per user, using basic protection to prevent the same user (on the same browser & device) from submitting more than once.')
-        }],
-        ['iframe_url', {
-          label: t('Embeddable web form code'),
-          desc: t('Use this html5 code snippet to integrate your form on your own website using smaller margins. ')
-        }],
-        ['preview_url', {
-          label: t('View only'),
-          desc: t('Use this version for testing, getting feedback. Does not allow submitting data. ')
-        }],
-        ['android', {
-          label: t('Android application'),
-          desc: t('Use this option to collect data in the field with your Android device.')
-        }],
+        // ['url', {
+        //   label: t('Online-Only (multiple submissions)'),
+        //   desc: t('This is the best option when entering many records at once on a computer, e.g. for transcribing paper records.')
+        // }],
+        // ['single_url', {
+        //   label: t('Online-Only (single submission)'),
+        //   desc: t('This allows a single submission, and can be paired with the "returnURL" parameter to redirect the user to a URL of your choice after the form has been submitted.')
+        // }],
+        // ['single_once_url', {
+        //   label: t('Online-only (once per respondent)'),
+        //   desc: t('This allows your web form to only be submitted once per user, using basic protection to prevent the same user (on the same browser & device) from submitting more than once.')
+        // }],
+        // ['iframe_url', {
+        //   label: t('Embeddable web form code'),
+        //   desc: t('Use this html5 code snippet to integrate your form on your own website using smaller margins. ')
+        // }],
+        // ['preview_url', {
+        //   label: t('View only'),
+        //   desc: t('Use this version for testing, getting feedback. Does not allow submitting data. ')
+        // }],
+        // ['android', {
+        //   label: t('Android application'),
+        //   desc: t('Use this option to collect data in the field with your Android device.')
+        // }],
     ]);
 
     var deployment__links_list = [];
@@ -241,6 +241,11 @@ export class FormLanding extends React.Component {
         <bem.FormView__cell m='box'>
           <bem.FormView__cell m={['columns', 'padding']}>
             <bem.FormView__cell>
+            <a className='collect-link mdl-button mdl-button--colored'
+                  target='_blank'
+                  href={this.state.deployment__links[chosenMethod]}>
+                  {this.state.deployment__links[chosenMethod]}
+                </a>
               <ui.PopoverMenu type='collectData-menu' triggerLabel={available_links.get(chosenMethod).label}>
                 {deployment__links_list.map((c) => {
                   return (

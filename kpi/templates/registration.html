@@ -2,7 +2,7 @@
 
 {%block head %}
   {% load static %}
-  {% if config.login_background %}
+  <!-- {% if config.login_background %}
   <style>
   .registration__bg {
     background: url("{{ config.login_background }}");
@@ -10,21 +10,21 @@
     background-repeat: no-repeat;
   }
   </style>
-  {% endif %}
+  {% endif %} -->
 {% endblock %}
 
 {% block logo %}
     {% if config.logo %}
         <img src="{{ config.logo }}"/>
     {% else %}
-        <img src="{% static 'img/kobologo.svg' %}"/>
+        <img src="{% static 'img/moalogo.png' %}"/>
     {% endif %}
 {% endblock %}
 
 {% block content %}
 {% endblock %}
 
-{% block background_credit %}
+<!-- {% block background_credit %}
     {% if not config.login_background %}
     {# Show the background image credit only if we're using the default image #}
     <div class="registration__credit">
@@ -37,4 +37,4 @@
         </a>
     </div>
     {% endif %}
-{% endblock %}
+{% endblock %} -->

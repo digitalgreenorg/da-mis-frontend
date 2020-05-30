@@ -141,10 +141,10 @@ class Drawer extends Reflux.Component {
   render () {
     return (
       <bem.KDrawer>
-        <bem.KDrawer__primaryIcons>
+        {/* <bem.KDrawer__primaryIcons>
           <DrawerLink label={t('Projects')} linkto='/forms' ki-icon='projects' />
           <DrawerLink label={t('Library')} linkto='/library' ki-icon='library' />
-        </bem.KDrawer__primaryIcons>
+        </bem.KDrawer__primaryIcons> */}
 
         <bem.KDrawer__sidebar>
           { this.isLibrary()
@@ -153,7 +153,7 @@ class Drawer extends Reflux.Component {
           }
         </bem.KDrawer__sidebar>
 
-        <bem.KDrawer__secondaryIcons>
+        {/* <bem.KDrawer__secondaryIcons>
           { stores.session.currentAccount &&
             <IntercomHelpBubble/>
           }
@@ -176,7 +176,7 @@ class Drawer extends Reflux.Component {
               <i className='k-icon k-icon-github' />
             </a>
           }
-        </bem.KDrawer__secondaryIcons>
+        </bem.KDrawer__secondaryIcons> */}
       </bem.KDrawer>
       );
   }
