@@ -30,7 +30,8 @@ class SharingForm extends React.Component {
     autoBind(this);
     this.state = {
       allAssetsCount: 0,
-      isAddUserEditorVisible: false
+      isAddUserEditorVisible: false,
+      isNewUserEditorVisible: false,
     };
   }
 
@@ -119,6 +120,10 @@ class SharingForm extends React.Component {
     this.setState({isAddUserEditorVisible: !this.state.isAddUserEditorVisible});
   }
 
+  toggleNewUserEditor() {
+    this.setState({isNewUserEditorVisible: !this.state.isNewUserEditorVisible});
+  }
+
   onPermissionsEditorSubmitEnd(isSuccess) {
     if (isSuccess) {
       this.setState({isAddUserEditorVisible: false});
@@ -172,12 +177,24 @@ class SharingForm extends React.Component {
           })}
 
           {!this.state.isAddUserEditorVisible &&
+            !this.state.isNewUserEditorVisible &&
             <bem.Button
               m={['raised', 'colored']}
               onClick={this.toggleAddUserEditor}
             >
               {t('Add user')}
             </bem.Button>
+          }
+
+          {!this.state.isNewUserEditorVisible &&
+          !this.state.isAddUserEditorVisible &&
+           <bem.Button
+             m={['raised', 'colored']}
+             onClick={this.toggleNewUserEditor}
+           >
+             {t('Create New user')}
+           </bem.Button>
+
           }
 
           {this.state.isAddUserEditorVisible &&
@@ -199,13 +216,43 @@ class SharingForm extends React.Component {
                   onSubmitEnd={this.onPermissionsEditorSubmitEnd}
                 />
               }
-              {kind === ASSET_KINDS.get('collection') &&
+              {/* {kind === ASSET_KINDS.get('collection') &&
                 <UserCollectionPermsEditor
                   uid={uid}
                   assignablePerms={this.state.assignablePerms}
                   onSubmitEnd={this.onPermissionsEditorSubmitEnd}
                 />
+              } */}
+
+            </bem.FormModal__item>
+          }
+
+        {this.state.isNewUserEditorVisible &&
+            <bem.FormModal__item m={['gray-row', 'copy-team-permissions']}>
+              <bem.Button
+                m='icon'
+                className='user-permissions-editor-closer'
+                onClick={this.toggleNewUserEditor}
+              >
+                <i className='k-icon k-icon-close'/>
+              </bem.Button>
+
+              {/* TODO simplify this code when https://github.com/kobotoolbox/kpi/issues/2332 is done */}
+              {kind === ASSET_KINDS.get('asset') &&
+                <UserAssetPermsEditor
+                  uid={uid}
+                  assignablePerms={this.state.assignablePerms}
+                  nonOwnerPerms={this.state.nonOwnerPerms}
+                  onSubmitEnd={this.onPermissionsEditorSubmitEnd}
+                />
               }
+              {/* {kind === ASSET_KINDS.get('collection') &&
+                <UserCollectionPermsEditor
+                  uid={uid}
+                  assignablePerms={this.state.assignablePerms}
+                  onSubmitEnd={this.onPermissionsEditorSubmitEnd}
+                />
+              } */}
 
             </bem.FormModal__item>
           }

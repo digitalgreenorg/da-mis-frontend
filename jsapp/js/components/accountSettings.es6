@@ -4,7 +4,6 @@ import reactMixin from 'react-mixin';
 import autoBind from 'react-autobind';
 import Reflux from 'reflux';
 import DocumentTitle from 'react-document-title';
-import TextareaAutosize from 'react-autosize-textarea';
 import alertify from 'alertifyjs';
 import {actions} from '../actions';
 import {bem} from '../bem';
@@ -72,40 +71,35 @@ export class AccountSettings extends React.Component {
     this.setState({
       name: currentAccount.extra_details.name,
       email: currentAccount.email,
-      organization: currentAccount.extra_details.organization,
-      organizationWebsite: currentAccount.extra_details.organization_website,
-      primarySector: currentAccount.extra_details.primarySector,
       gender: currentAccount.extra_details.gender,
-      bio: currentAccount.extra_details.bio,
       phoneNumber: currentAccount.extra_details.phone_number,
-      address: currentAccount.extra_details.address,
-      city: currentAccount.extra_details.city,
-      country: currentAccount.extra_details.country,
-      defaultLanguage: currentAccount.extra_details.default_language,
       requireAuth: currentAccount.extra_details.require_auth,
-      twitter: currentAccount.extra_details.twitter,
-      linkedin: currentAccount.extra_details.linkedin,
-      instagram: currentAccount.extra_details.instagram,
-      metadata: currentAccount.extra_details.metadata,
-
-      languageChoices: environment.all_languages,
-      countryChoices: environment.available_countries,
-      sectorChoices: environment.available_sectors,
-      genderChoices: [
-        {
-          value: 'male',
-          label: t('Male')
-        },
-        {
-          value: 'female',
-          label: t('Female')
-        },
-        {
-          value: 'other',
-          label: t('Other')
-        },
-      ],
       fieldsErrors: {}
+      // genderChoices: [
+      //   {
+      //     value: 'male',
+      //     label: t('Male')
+      //   },
+      //   {
+      //     value: 'female',
+      //     label: t('Female')
+      //   }
+      // ],
+      // organization: currentAccount.extra_details.organization,
+      // organizationWebsite: currentAccount.extra_details.organization_website,
+      // primarySector: currentAccount.extra_details.primarySector,
+      // bio: currentAccount.extra_details.bio,
+      // address: currentAccount.extra_details.address,
+      // city: currentAccount.extra_details.city,
+      // country: currentAccount.extra_details.country,
+      // defaultLanguage: currentAccount.extra_details.default_language,
+      // twitter: currentAccount.extra_details.twitter,
+      // linkedin: currentAccount.extra_details.linkedin,
+      // instagram: currentAccount.extra_details.instagram,
+      // metadata: currentAccount.extra_details.metadata,
+      // languageChoices: environment.all_languages,
+      // countryChoices: environment.available_countries,
+      // sectorChoices: environment.available_sectors,
     });
   }
 
@@ -148,21 +142,21 @@ export class AccountSettings extends React.Component {
         email: this.state.email,
         extra_details: JSON.stringify({
           name: this.state.name,
-          organization: this.state.organization,
-          organization_website: this.state.organizationWebsite,
-          primarySector: this.state.primarySector,
-          gender: this.state.gender,
-          bio: this.state.bio,
           phone_number: this.state.phoneNumber,
-          address: this.state.address,
-          city: this.state.city,
-          country: this.state.country,
-          default_language: this.state.defaultLanguage,
           require_auth: this.state.requireAuth,
-          twitter: this.state.twitter,
-          linkedin: this.state.linkedin,
-          instagram: this.state.instagram,
-          metadata: this.state.metadata,
+          // gender: this.state.gender,
+          // organization: this.state.organization,
+          // organization_website: this.state.organizationWebsite,
+          // primarySector: this.state.primarySector,
+          // bio: this.state.bio,
+          // address: this.state.address,
+          // city: this.state.city,
+          // country: this.state.country,
+          // default_language: this.state.defaultLanguage,
+          // twitter: this.state.twitter,
+          // linkedin: this.state.linkedin,
+          // instagram: this.state.instagram,
+          // metadata: this.state.metadata,
         })
       },
       {
@@ -204,21 +198,21 @@ export class AccountSettings extends React.Component {
   }
   nameChange (e) {this.handleChange(e, 'name');}
   emailChange (e) {this.handleChange(e, 'email');}
-  organizationChange (e) {this.handleChange(e, 'organization');}
-  organizationWebsiteChange (e) {this.handleChange(e, 'organizationWebsite');}
-  primarySectorChange (e) {this.handleChange(e, 'primarySector');}
-  genderChange (e) {this.handleChange(e, 'gender');}
-  bioChange (e) {this.handleChange(e, 'bio');}
+  // genderChange (e) {this.handleChange(e, 'gender');}
   phoneNumberChange (e) {this.handleChange(e, 'phoneNumber');}
-  addressChange (e) {this.handleChange(e, 'address');}
-  cityChange (e) {this.handleChange(e, 'city');}
-  countryChange (e) {this.handleChange(e, 'country');}
-  defaultLanguageChange (e) {this.handleChange(e, 'defaultLanguage');}
   requireAuthChange (isChecked) {this.handleChange(isChecked, 'requireAuth');}
-  twitterChange (e) {this.handleChange(e, 'twitter');}
-  linkedinChange (e) {this.handleChange(e, 'linkedin');}
-  instagramChange (e) {this.handleChange(e, 'instagram');}
-  metadataChange (e) {this.handleChange(e, 'metadata');}
+  // organizationChange (e) {this.handleChange(e, 'organization');}
+  // organizationWebsiteChange (e) {this.handleChange(e, 'organizationWebsite');}
+  // primarySectorChange (e) {this.handleChange(e, 'primarySector');}
+  // bioChange (e) {this.handleChange(e, 'bio');}
+  // addressChange (e) {this.handleChange(e, 'address');}
+  // cityChange (e) {this.handleChange(e, 'city');}
+  // countryChange (e) {this.handleChange(e, 'country');}
+  // defaultLanguageChange (e) {this.handleChange(e, 'defaultLanguage');}
+  // twitterChange (e) {this.handleChange(e, 'twitter');}
+  // linkedinChange (e) {this.handleChange(e, 'linkedin');}
+  // instagramChange (e) {this.handleChange(e, 'instagram');}
+  // metadataChange (e) {this.handleChange(e, 'metadata');}
 
   render() {
     if(
@@ -320,18 +314,27 @@ export class AccountSettings extends React.Component {
                 </a>
               </bem.AccountSettings__item>
 
+              <bem.AccountSettings__item>
+                <TextBox
+                  label={t('Phone Number')}
+                  errors={this.state.fieldsErrors.phoneNumber}
+                  value={this.state.phoneNumber}
+                  onChange={this.phoneNumberChange}
+                />
+              </bem.AccountSettings__item>
+
               <ApiTokenDisplay/>
 
-              <bem.AccountSettings__item>
+              {/* <bem.AccountSettings__item>
                 <TextBox
                   label={t('Organization')}
                   errors={this.state.fieldsErrors.organization}
                   value={this.state.organization}
                   onChange={this.organizationChange}
                 />
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
-              <bem.AccountSettings__item>
+              {/* <bem.AccountSettings__item>
                 <TextBox
                   label={t('Organization Website')}
                   type='url'
@@ -362,7 +365,7 @@ export class AccountSettings extends React.Component {
                 <bem.AccountSettings__desc>
                   {t('Select the primary sector in which you work. ')}
                 </bem.AccountSettings__desc>
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
               <bem.AccountSettings__item m='gender'>
                 <label>
@@ -379,7 +382,7 @@ export class AccountSettings extends React.Component {
                 </label>
               </bem.AccountSettings__item>
 
-              <bem.AccountSettings__item m='bio'>
+              {/* <bem.AccountSettings__item m='bio'>
                 <label>
                   {t('Bio')}
 
@@ -389,18 +392,9 @@ export class AccountSettings extends React.Component {
                     id='bio'
                   />
                 </label>
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
-              <bem.AccountSettings__item>
-                <TextBox
-                  label={t('Phone Number')}
-                  errors={this.state.fieldsErrors.phoneNumber}
-                  value={this.state.phoneNumber}
-                  onChange={this.phoneNumberChange}
-                />
-              </bem.AccountSettings__item>
-
-              <bem.AccountSettings__item>
+              {/* <bem.AccountSettings__item>
                 <TextBox
                   label={t('Address')}
                   errors={this.state.fieldsErrors.address}
@@ -431,9 +425,9 @@ export class AccountSettings extends React.Component {
                     menuPlacement='auto'
                   />
                 </label>
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
-              <bem.AccountSettings__item className='is-edge'>
+              {/* <bem.AccountSettings__item className='is-edge'>
                 <label>
                   {t('Default Form Language')}
 
@@ -446,9 +440,9 @@ export class AccountSettings extends React.Component {
                     menuPlacement='auto'
                   />
                 </label>
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
-              <bem.AccountSettings__item m='social'>
+              {/* <bem.AccountSettings__item m='social'>
                 <label>{t('Social')}</label>
 
                 <label>
@@ -480,16 +474,16 @@ export class AccountSettings extends React.Component {
                     onChange={this.instagramChange}
                   />
                 </label>
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
 
-              <bem.AccountSettings__item>
+              {/* <bem.AccountSettings__item>
                 <TextBox
                   label={t('Metadata')}
                   errors={this.state.fieldsErrors.metadata}
                   value={this.state.metadata}
                   onChange={this.metadataChange}
                 />
-              </bem.AccountSettings__item>
+              </bem.AccountSettings__item> */}
             </bem.AccountSettings__item>
           </bem.AccountSettings__item>
         </bem.AccountSettings>
