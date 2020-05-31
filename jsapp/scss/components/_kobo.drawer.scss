@@ -79,6 +79,15 @@ $drawer-icons-width: 58px;
   button.mdl-button {
     width: 100%;
   }
+
+  a.mdl-button {
+    width: 100%;
+  }
+
+  .new-user-button {
+    position: relative;
+    bottom: 20px;
+  }
 }
 
 @media screen and (max-width: 999px) {
@@ -101,6 +110,7 @@ $drawer-icons-width: 58px;
     margin-left: 0;
   }
 }
+
 
 @media screen and (min-width: 768px) and (max-width: 999px) {
   .mdl-layout__content {
