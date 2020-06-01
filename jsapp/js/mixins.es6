@@ -657,7 +657,7 @@ mixins.clickAssets = {
 
 mixins.permissions = {
   userIsStaff() {
-    console.out(stores.session.currentAccount.is_staff)
+    console.log(stores.session.currentAccount.is_staff)
     return (
       //can be a separate user manage permission
       stores.session.currentAccount.is_staff
