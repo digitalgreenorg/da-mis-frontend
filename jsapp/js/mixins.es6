@@ -656,6 +656,12 @@ mixins.clickAssets = {
 };
 
 mixins.permissions = {
+  userIsStaff() {
+    return (
+      //can be a separate user manage permission
+      stores.session.currentAccount.is_staff
+    );
+  },
   userIsOwner(asset) {
     return (
       asset &&
