@@ -246,7 +246,7 @@ export class FormLanding extends React.Component {
                   href={this.state.deployment__links[chosenMethod]}>
                   {this.state.deployment__links[chosenMethod]}
                 </a>
-              <ui.PopoverMenu type='collectData-menu' triggerLabel={available_links.get(chosenMethod).label}>
+              {/* <ui.PopoverMenu type='collectData-menu' triggerLabel={available_links.get(chosenMethod).label}>
                 {deployment__links_list.map((c) => {
                   return (
                     <bem.PopoverMenu__link
@@ -260,7 +260,7 @@ export class FormLanding extends React.Component {
                     </bem.PopoverMenu__link>
                   );
                 })}
-              </ui.PopoverMenu>
+              </ui.PopoverMenu> */}
             </bem.FormView__cell>
             <bem.FormView__cell>
               {chosenMethod !== 'iframe_url' && chosenMethod !== 'android' &&
@@ -301,7 +301,7 @@ export class FormLanding extends React.Component {
               }
             </bem.FormView__cell>
           </bem.FormView__cell>
-          <bem.FormView__cell m={['padding', 'bordertop', 'collect-meta']}>
+          {/* <bem.FormView__cell m={['padding', 'bordertop', 'collect-meta']}>
             {chosenMethod !== 'android' &&
               available_links.get(chosenMethod).desc
             }
@@ -332,7 +332,7 @@ export class FormLanding extends React.Component {
               </ol>
             }
 
-          </bem.FormView__cell>
+          </bem.FormView__cell> */}
         </bem.FormView__cell>
       </bem.FormView__row>
     );
@@ -484,7 +484,7 @@ export class FormLanding extends React.Component {
     }
 
     return (
-      <DocumentTitle title={`${docTitle} | MOA Admin`}>
+      <DocumentTitle title={`${docTitle} | Admin Dashboard`}>
         <bem.FormView m='form'>
           <bem.FormView__row>
             <bem.FormView__cell m={['columns', 'first']}>

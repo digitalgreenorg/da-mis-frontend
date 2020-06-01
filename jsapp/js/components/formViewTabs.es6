@@ -13,6 +13,7 @@ import {
   t,
   assign,
 } from '../utils';
+import { SINGLE_FORM } from '../constants.es6';
 
 class FormViewTabs extends Reflux.Component {
   constructor(props){
@@ -85,11 +86,11 @@ class FormViewTabs extends Reflux.Component {
             {t('Settings')}
           </Link>
         }
-        <Link
+        {!SINGLE_FORM && <Link
           to={'/forms'}
           className='form-view__link form-view__link--close'>
           <i className='k-icon-close' />
-        </Link>
+        </Link>}
 
       </bem.FormView__toptabs>
     );

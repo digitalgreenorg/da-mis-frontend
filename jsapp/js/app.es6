@@ -20,7 +20,8 @@ import {
   IndexRedirect,
   Route,
   hashHistory,
-  Router
+  Router,
+  Redirect
 } from 'react-router';
 import moment from 'moment';
 import {actions} from './actions';
@@ -63,7 +64,8 @@ class App extends React.Component {
     moment.locale(currentLang());
     this.state = assign({
       isConfigReady: false,
-      pageState: stores.pageState.state
+      pageState: stores.pageState.state,
+      assetID: null
     });
   }
   componentWillReceiveProps() {
@@ -76,13 +78,18 @@ class App extends React.Component {
   }
   componentDidMount () {
     this.listenTo(actions.permissions.getConfig.completed, this.onGetConfigCompleted);
-
+    // this.listenTo(actions.search.assets.completed, this.onListAssetsCompleted);
     actions.misc.getServerEnvironment();
     actions.permissions.getConfig();
   }
   onGetConfigCompleted() {
     this.setState({isConfigReady: true});
   }
+  // onListAssetsCompleted(searchData, response) {
+  //   if(response.results.length>0)
+  //     this.setState({assetID: response.results[0].uid});
+  //   console.log(this.state.assetID);
+  // }
   _handleShortcuts(action) {
     switch (action) {
       case 'EDGE':
@@ -267,6 +274,16 @@ class SectionNotFound extends React.Component {
   }
 }
 
+class FormRedirect extends React.Component{
+  render() {
+    return(
+      this.props.shouldRedirect ?
+        <IndexRedirect to={`/forms/${this.props.assetID}`}/> :
+        ''
+    );
+  }
+}
+
 export var routes = (
   <Route name='home' path='/' component={App}>
     <Route path='account-settings' component={AccountSettings} />
@@ -284,10 +301,15 @@ export var routes = (
       <IndexRoute component={LibrarySearchableList} />
     </Route>
 
+    {/* {this.state.assetID === null &&  */}
     <IndexRedirect to='forms' />
+    {/* } */}
     <Route path='forms' >
-      <IndexRoute component={FormsSearchableList} />
 
+      <IndexRoute component={FormsSearchableList} />
+      
+      {/* <FormRedirect shouldRedirect={this.state.assetID!==null} assetID={this.state.assetID}/> */}
+      
       <Route path='/forms/:assetid'>
         {/*<Route name="form-download" path="download" component={FormDownload} />*/}
         <Route path='json' component={FormJson} />

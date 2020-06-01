@@ -13,7 +13,7 @@ import DocumentTitle from 'react-document-title';
 import $ from 'jquery';
 import Dropzone from 'react-dropzone';
 import {t, validFileTypes} from '../utils';
-import {ASSET_TYPES} from '../constants';
+import {ASSET_TYPES, SINGLE_FORM} from '../constants';
 
 class SearchCollectionList extends Reflux.Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class SearchCollectionList extends Reflux.Component {
 
     return (
       <this.props.assetRowClass key={resource.uid}
-        currentUsername={currentUsername}
+        currentUs ername={currentUsername}
         onActionButtonClick={this.onActionButtonClick}
         isSelected={isSelected}
         ownedCollections={ownedCollections}
@@ -203,7 +203,7 @@ class SearchCollectionList extends Reflux.Component {
       docTitle = t('Library');
     }
     return (
-      <DocumentTitle title={`${docTitle} | KoboToolbox`}>
+      <DocumentTitle title={`${docTitle} | Admin Dashboard`}>
         <Dropzone
           onDrop={this.dropFiles}
           disableClick

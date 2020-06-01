@@ -401,7 +401,6 @@ function SearchContext(opts={}) {
         this.searchDefault();
       } else {
         searchStore.update({defaultQueryState: 'done'});
-
         dataInterface.assetsHash()
           .done((data) => {
             if (data.hash && data.hash !== assetsHash(searchStore.state.defaultQueryResultsList)) {

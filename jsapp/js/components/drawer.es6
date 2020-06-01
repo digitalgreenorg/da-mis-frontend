@@ -20,7 +20,7 @@ import {
   SupportHelpBubble
 } from '../components/helpBubbles';
 
-import {MODAL_TYPES} from '../constants';
+import {MODAL_TYPES, SINGLE_FORM} from '../constants';
 
 import {
   t,
@@ -65,22 +65,31 @@ class FormSidebar extends Reflux.Component {
 
   newUserModal (evt) {
     evt.preventDefault();
-    // stores.pageState.showModal({
-      // type: MODAL_TYPES.NEW_USER
-    // });
+    stores.pageState.showModal({
+      type: MODAL_TYPES.NEW_USER
+    });
 
   }
 
   render () {
     return (
       <bem.FormSidebar__wrapper>
-        <button onClick={this.newFormModal} className='mdl-button mdl-button--raised mdl-button--colored'>
+        { !SINGLE_FORM &&
+          <>
+          <button onClick={this.newFormModal} className='mdl-button mdl-button--raised mdl-button--colored'>
           {t('new')}
-        </button>
-        <SidebarFormsList/>
+          </button>
+          <SidebarFormsList/>
+          </>
+        }
+        
         <a href='/admin/auth/user/add/' target='_blank' className='new-user-button mdl-button mdl-button--raised mdl-button--colored'>
           {t('new user')}
         </a>
+
+        <button onClick={this.newUserModal} className='mdl-button mdl-button--raised mdl-button--colored'>
+          {t('new user dialog')}
+          </button>
       </bem.FormSidebar__wrapper>
     );
   }

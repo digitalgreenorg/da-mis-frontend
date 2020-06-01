@@ -2,6 +2,7 @@ import React from 'react';
 import TextBox from 'js/components/textBox';
 import {bem} from 'js/bem';
 import {t} from 'js/utils';
+import UserAssetPermsEditor from '../permissions/userAssetPermsEditor.es6';
 
 class UserForm extends React.Component {
 
@@ -38,7 +39,13 @@ class UserForm extends React.Component {
           label={t('Email')}
           />
         </bem.FormModal__item>
-
+        {/* <UserAssetPermsEditor 
+          username='super_admin'
+          uid={uid}
+          assignablePerms={this.state.assignablePerms}  
+          nonOwnerPerms={this.state.nonOwnerPerms}
+          onSubmitEnd={this.onPermissionsEditorSubmitEnd}
+        /> */}
         <bem.Modal__footer>
           <bem.Modal__footerButton
             m='primary'
