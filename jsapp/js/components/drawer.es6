@@ -82,14 +82,20 @@ class FormSidebar extends Reflux.Component {
           <SidebarFormsList/>
           </>
         }
-        
-        <a href='/admin/auth/user/add/' target='_blank' className='new-user-button mdl-button mdl-button--raised mdl-button--colored'>
-          {t('new user')}
-        </a>
+        {  this.userIsStaff() &&  
+            <a href='/admin/auth/user/add/' target='_blank' className='new-user-button mdl-button mdl-button--raised mdl-button--colored'>
+            {t('new user')}
+            </a>
+        }
 
-        <button onClick={this.newUserModal} className='mdl-button mdl-button--raised mdl-button--colored'>
+        {//todo change to dynamic url}
+        <a href='https://daform.digitalgreen.org/x/Oy2FjteR' target='_blank' className='mdl-button mdl-button--raised mdl-button--colored'>
+            {t('new da entry')}
+        </a>}
+        
+        {/* <button onClick={this.newUserModal} className='mdl-button mdl-button--raised mdl-button--colored'>
           {t('new user dialog')}
-          </button>
+          </button> */}
       </bem.FormSidebar__wrapper>
     );
   }
@@ -105,6 +111,7 @@ FormSidebar.contextTypes = {
 
 reactMixin(FormSidebar.prototype, searches.common);
 reactMixin(FormSidebar.prototype, mixins.droppable);
+reactMixin(FormSidebar.prototype, mixins.permissions);
 
 class DrawerLink extends React.Component {
   constructor(props) {
@@ -206,6 +213,7 @@ class Drawer extends Reflux.Component {
 reactMixin(Drawer.prototype, searches.common);
 reactMixin(Drawer.prototype, mixins.droppable);
 reactMixin(Drawer.prototype, mixins.contextRouter);
+
 
 Drawer.contextTypes = {
   router: PropTypes.object

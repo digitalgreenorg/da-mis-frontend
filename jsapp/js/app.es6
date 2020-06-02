@@ -139,7 +139,7 @@ class App extends React.Component {
               { !this.isFormBuilder() &&
                 <MainHeader assetid={assetid}/>
               }
-              { !this.isFormBuilder() && this.userIsStaff() &&
+              { !this.isFormBuilder() &&
                 <Drawer/>
               }
               <bem.PageWrapper__content className='mdl-layout__content' m={this.isFormSingle() ? 'form-landing' : ''}>
@@ -169,7 +169,7 @@ App.childContextTypes = {
 
 reactMixin(App.prototype, Reflux.connect(stores.pageState, 'pageState'));
 reactMixin(App.prototype, mixins.contextRouter);
-reactMixin(App.prototype, mixins.permissions);
+// reactMixin(App.prototype, mixins.permissions);
 
 
 class FormJson extends React.Component {
