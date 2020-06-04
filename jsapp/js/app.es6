@@ -140,7 +140,7 @@ class App extends React.Component {
                 <MainHeader assetid={assetid}/>
               }
               { !this.isFormBuilder() &&
-                <Drawer/>
+                <Drawer assetid={assetid}/>
               }
               <bem.PageWrapper__content className='mdl-layout__content' m={this.isFormSingle() ? 'form-landing' : ''}>
                 { !this.isFormBuilder() &&

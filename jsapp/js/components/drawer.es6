@@ -33,6 +33,7 @@ class FormSidebar extends Reflux.Component {
   constructor(props){
     super(props);
     this.state = assign({
+      asset: false,
       currentAssetId: false,
       files: []
     }, stores.pageState.state);
@@ -44,6 +45,11 @@ class FormSidebar extends Reflux.Component {
   }
   componentWillMount() {
     this.setStates();
+    this.listenTo(stores.asset, this.assetLoad);
+  }
+  assetLoad(data) {
+    const asset = data[this.props.assetid];
+    this.setState(assign({asset: asset}));
   }
   setStates() {
     this.setState({
@@ -88,8 +94,8 @@ class FormSidebar extends Reflux.Component {
             </a>
         }
 
-        {//todo change to dynamic url}
-        <a href='https://daform.digitalgreen.org/x/Oy2FjteR' target='_blank' className='mdl-button mdl-button--raised mdl-button--colored'>
+        { this.state.asset && 
+        <a href={this.state.asset.deployment__links.offline_url} target='_blank' className='mdl-button mdl-button--raised mdl-button--colored'>
             {t('new da entry')}
         </a>}
         
@@ -112,6 +118,7 @@ FormSidebar.contextTypes = {
 reactMixin(FormSidebar.prototype, searches.common);
 reactMixin(FormSidebar.prototype, mixins.droppable);
 reactMixin(FormSidebar.prototype, mixins.permissions);
+reactMixin(FormSidebar.prototype, Reflux.ListenerMixin);
 
 class DrawerLink extends React.Component {
   constructor(props) {
@@ -173,11 +180,10 @@ class Drawer extends Reflux.Component {
           <DrawerLink label={t('Projects')} linkto='/forms' ki-icon='projects' />
           <DrawerLink label={t('Library')} linkto='/library' ki-icon='library' />
         </bem.KDrawer__primaryIcons> */}
-
         <bem.KDrawer__sidebar>
           { this.isLibrary()
             ? <LibrarySidebar />
-            : <FormSidebar />
+            : <FormSidebar assetid={this.props.assetid}/>
           }
         </bem.KDrawer__sidebar>
 
