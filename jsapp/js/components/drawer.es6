@@ -20,7 +20,7 @@ import {
   SupportHelpBubble
 } from '../components/helpBubbles';
 
-import {MODAL_TYPES, SINGLE_FORM} from '../constants';
+import {MODAL_TYPES, NEW_FORM_ALLOWED} from '../constants';
 
 import {
   t,
@@ -29,11 +29,14 @@ import {
 
 import SidebarFormsList from '../lists/sidebarForms';
 
+
+const BUTTONS_LABELS = [t('new da entry'), t('new sms entry')]
+
 class FormSidebar extends Reflux.Component {
   constructor(props){
     super(props);
     this.state = assign({
-      asset: false,
+      assets: false,
       currentAssetId: false,
       files: []
     }, stores.pageState.state);
@@ -45,11 +48,10 @@ class FormSidebar extends Reflux.Component {
   }
   componentWillMount() {
     this.setStates();
-    this.listenTo(stores.asset, this.assetLoad);
+    this.listenTo(stores.allAssets, this.assetLoad);
   }
   assetLoad(data) {
-    const asset = data[this.props.assetid];
-    this.setState(assign({asset: asset}));
+    this.setState(assign({assets: data}));
   }
   setStates() {
     this.setState({
@@ -76,11 +78,21 @@ class FormSidebar extends Reflux.Component {
     });
 
   }
+  renderButtons(){
+    console.log(this.state.assets)
+    return(
+      this.state.assets && this.state.assets.map((value, i) => 
+      <a href={value.deployment__links.offline_url} target='_blank' className='new-entry-button mdl-button mdl-button--raised mdl-button--colored'>
+        {BUTTONS_LABELS[i]}
+      </a>)
+    );
+  }
 
   render () {
+
     return (
       <bem.FormSidebar__wrapper>
-        { !SINGLE_FORM &&
+        { NEW_FORM_ALLOWED &&
           <>
           <button onClick={this.newFormModal} className='mdl-button mdl-button--raised mdl-button--colored'>
           {t('new')}
@@ -93,12 +105,10 @@ class FormSidebar extends Reflux.Component {
             {t('new user')}
             </a>
         }
+        {
+          this.renderButtons()
+        }
 
-        { this.state.asset && 
-        <a href={this.state.asset.deployment__links.offline_url} target='_blank' className='mdl-button mdl-button--raised mdl-button--colored'>
-            {t('new da entry')}
-        </a>}
-        
         {/* <button onClick={this.newUserModal} className='mdl-button mdl-button--raised mdl-button--colored'>
           {t('new user dialog')}
           </button> */}
@@ -183,7 +193,7 @@ class Drawer extends Reflux.Component {
         <bem.KDrawer__sidebar>
           { this.isLibrary()
             ? <LibrarySidebar />
-            : <FormSidebar assetid={this.props.assetid}/>
+            : <FormSidebar daasset={this.props.asset1} smsasset={this.props.asset2}/>
           }
         </bem.KDrawer__sidebar>
 

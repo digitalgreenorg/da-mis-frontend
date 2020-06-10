@@ -347,7 +347,8 @@ new Set([
 ]).forEach((codename) => {META_QUESTION_TYPES.set(codename, codename);});
 
 export const NAME_MAX_LENGTH = 255;
-export const SINGLE_FORM = true;
+export const SINGLE_FORM = false;
+export const NEW_FORM_ALLOWED = false;
 export const DISPLAY_SEARCH = true;
 
 
