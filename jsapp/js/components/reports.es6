@@ -520,31 +520,56 @@ class ReportContents extends React.Component {
           }
         }
       }
+
+      if(reportData[0])
+        reportData[0].style.report_type = 'horizontal'
+
+      if(reportData[1])
+        reportData[1].style.report_type = 'donut'
     }
 
     return (
       <div>
         {
-          reportData.map((rowContent, i)=>{
-            let label = t('Unlabeled');
-            if (_.isArray(rowContent.row.label)) {
-              label = rowContent.row.label[tnslIndex];
-            } else if (_.isString(rowContent.row.label)) {
-              label = rowContent.row.label;
-            }
+          //Specialization graph
+          <bem.ReportView__item key={'specialization'}>
+            <ReportViewItem
+              {...reportData[0]}
+              label={t('Specialization by Gender')}
+              stacked
+              triggerQuestionSettings={this.props.triggerQuestionSettings} />
+          </bem.ReportView__item>
+        }
+        {
+          //Specialization graph
+          <bem.ReportView__item key={'education'}>
+            <ReportViewItem
+              {...reportData[1]}
+              label={t('Education Level')}
+              triggerQuestionSettings={this.props.triggerQuestionSettings} />
+          </bem.ReportView__item>
+        }
+        {
+          // reportData.map((rowContent, i)=>{
+          //   let label = t('Unlabeled');
+          //   if (_.isArray(rowContent.row.label)) {
+          //     label = rowContent.row.label[tnslIndex];
+          //   } else if (_.isString(rowContent.row.label)) {
+          //     label = rowContent.row.label;
+          //   }
 
-            if (!rowContent.data.provided)
-              return false;
+          //   if (!rowContent.data.provided)
+          //     return false;
 
-            return (
-                <bem.ReportView__item key={i}>
-                  <ReportViewItem
-                      {...rowContent}
-                      label={label}
-                      triggerQuestionSettings={this.props.triggerQuestionSettings} />
-                </bem.ReportView__item>
-              );
-          })
+          //   return (
+          //       <bem.ReportView__item key={i}>
+          //         <ReportViewItem
+          //             {...rowContent}
+          //             label={label}
+          //             triggerQuestionSettings={this.props.triggerQuestionSettings} />
+          //       </bem.ReportView__item>
+          //     );
+          // })
         }
       </div>
     );
@@ -983,7 +1008,7 @@ class Reports extends React.Component {
 
     return (
       <bem.FormView__reportButtons>
-        <ui.PopoverMenu type='custom-reports'
+        {/* <ui.PopoverMenu type='custom-reports'
             triggerLabel={this.state.currentCustomReport ? (this.state.currentCustomReport.name || t('Untitled Report')) : t('Custom Reports')}>
             <bem.PopoverMenu__link
               key='default'
@@ -1012,15 +1037,15 @@ class Reports extends React.Component {
                   {t('Create New Report')}
               </bem.PopoverMenu__link>
             }
-        </ui.PopoverMenu>
+        </ui.PopoverMenu> */}
 
-        {this.state.currentCustomReport &&
+        {/* {this.state.currentCustomReport &&
           <button className='mdl-button mdl-button--icon report-button__edit'
                 onClick={this.editCustomReport}
                 data-tip={t('Edit Report Questions')}>
             <i className='k-icon-edit' />
           </button>
-        }
+        } */}
 
         <button
           className='mdl-button mdl-button--icon report-button__expand right-tooltip'
@@ -1036,12 +1061,13 @@ class Reports extends React.Component {
           <i className='k-icon-print' />
         </button>
 
-        {this.userCan('change_asset', this.state.asset) &&
-          <button className='mdl-button mdl-button--icon report-button__settings'
-                  onClick={this.toggleReportGraphSettings}
-                  data-tip={t('Configure Report Style')}>
-            <i className='k-icon-settings' />
-          </button>
+        {
+        // this.userCan('change_asset', this.state.asset) &&
+        //   <button className='mdl-button mdl-button--icon report-button__settings'
+        //           onClick={this.toggleReportGraphSettings}
+        //           data-tip={t('Configure Report Style')}>
+        //     <i className='k-icon-settings' />
+        //   </button>
         }
       </bem.FormView__reportButtons>
     );
@@ -1186,10 +1212,10 @@ class Reports extends React.Component {
                   </bem.FormView__cell>
                 }
 
-                <bem.ReportView__warning>
+                {/* <bem.ReportView__warning>
                   <h4>{t('Warning')}</h4>
                   <p>{t('This is an automated report based on raw data submitted to this project. Please conduct proper data cleaning prior to using the graphs and figures used on this page. ')}</p>
-                </bem.ReportView__warning>
+                </bem.ReportView__warning> */}
 
                 <ReportContents parentState={this.state} reportData={reportData} triggerQuestionSettings={this.triggerQuestionSettings} />
               </bem.ReportView__wrap>

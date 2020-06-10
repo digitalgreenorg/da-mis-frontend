@@ -79,7 +79,6 @@ class FormSidebar extends Reflux.Component {
 
   }
   renderButtons(){
-    console.log(this.state.assets)
     return(
       this.state.assets && this.state.assets.map((value, i) => 
       <a href={value.deployment__links.offline_url} target='_blank' className='new-entry-button mdl-button mdl-button--raised mdl-button--colored'>

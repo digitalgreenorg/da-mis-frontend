@@ -77,7 +77,7 @@ class ReportTable extends React.Component {
         }
         rowsB.map((row, i)=> {
           var rowitem = row[2] ? [row[2]] : [row[0]];
-          rowitem = rowitem.concat(row[1].percentages);
+          rowitem = rowitem.concat(row[1].frequencies);
           rows.push(rowitem);
         });
       }
@@ -174,6 +174,7 @@ class ReportViewItem extends React.Component {
     var maxPercentage = 100;
     var barPercentage = 0.5;
     var showLegend = false;
+    var stacked = _this.props.stacked ? true : false
 
     // TODO: set as default globally in a higher level (PM)
     var colors = this.buildChartColors();
@@ -220,15 +221,29 @@ class ReportViewItem extends React.Component {
         let itemPerc = [];
         // TODO: Make the backend behave consistently?
         // https://github.com/kobotoolbox/kpi/issues/2562
-        if (Array.isArray(val[1].percentage)) {
-          itemPerc = val[1].percentage;
+        if(_this.props.percentage){
+          if (Array.isArray(val[1].percentage)) {
+            itemPerc = val[1].percentage;
+          }
+          if (Array.isArray(val[1].percentages)) {
+            itemPerc = val[1].percentages;
+          }
         }
-        if (Array.isArray(val[1].percentages)) {
-          itemPerc = val[1].percentages;
+        else {
+          if (Array.isArray(val[1].frequency)) {
+            itemPerc = val[1].frequency;
+          }
+          if (Array.isArray(val[1].frequencies)) {
+            itemPerc = val[1].frequencies;
+          }
         }
 
         item.data = itemPerc;
-        allPercentages = [...new Set([...allPercentages, ...itemPerc])];
+        // var itemPercStacked = stacked ? itemPerc.reduce(function(sum, num) {return sum+num}) : 0
+        if(stacked && i>0)
+          allPercentages = allPercentages.map((value, i) => value+itemPerc[i])
+        else
+          allPercentages = [...new Set([...allPercentages, ...itemPerc])];
         item.backgroundColor = colors[i];
         datasets.push(item);
       });
@@ -251,7 +266,7 @@ class ReportViewItem extends React.Component {
       }
     }
 
-    maxPercentage = maxPercentage < 85 ? ((parseInt(maxPercentage/10, 10)+1)*10) : 100;
+    maxPercentage = maxPercentage < 85 ? ((parseInt(maxPercentage/5, 5)+1)*5) : 100;
     var opts = {
       type: chartType,
       data: {
@@ -274,6 +289,7 @@ class ReportViewItem extends React.Component {
               max: maxPercentage
             },
             barPercentage: barPercentage,
+            stacked: stacked,
             // gridLines: {
             //   display: chartType == 'horizontalBar' ? true : false
             // }
@@ -285,6 +301,7 @@ class ReportViewItem extends React.Component {
               max: maxPercentage
             },
             barPercentage: barPercentage,
+            stacked: stacked,
             // gridLines: {
             //   display: chartType == 'horizontalBar' ? false : true
             // }
@@ -396,7 +413,7 @@ class ReportViewItem extends React.Component {
             <ReportTable rows={this.state.reportTable} type='regular'/>
           }
           {d.values && d.values[0] && d.values[0][1] && d.values[0][1].percentages &&
-            <ReportTable rows={d.values} responseLabels={d.responseLabels} type='disaggregated' />
+            <ReportTable rows={d.values} responseLabels={d.responseLabels} type='disaggregated' percentage={this.props.percentage} />
           }
           {d.values && d.values[0] && d.values[0][1] && d.values[0][1].mean &&
             <ReportTable rows={d.values} type='numerical' />
