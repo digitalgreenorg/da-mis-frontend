@@ -22,11 +22,11 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
                             request.query_params.get('names', '').split(','))
         else:
             vnames = None
-        
+
         filters = {}
         if 'query' in request.query_params:
             filters['query'] = request.query_params['query']
-            
+
         split_by = request.query_params.get('split_by', None)
 
         def dateFromString(param):
@@ -45,21 +45,21 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
                             '$add': [ {
                                 '$divide': [{'$subtract': [datetime.now(), dateFromString('$Date_of_Birth')]}, (365 * 24*60*60*1000)]
                             }, 0.5]
-                        } 
+                        }
                     },
                     'year_since_graduation': {
                         '$floor': {
                             '$add': [ {
                                 '$divide': [{'$subtract': [datetime.now(), dateFromString('$Graduation')]}, (365 * 24*60*60*1000)]
                             }, 0.5]
-                        } 
+                        }
                     },
                 }
             }
         ]
-        
+
         submission_stream = obj.deployment.get_submissions(request.user.id, aggregate_pipeline=aggregate_pipeline, **filters)
-        
+
 
         vnames_by_specialization = ['Gender']
         vnames = ['Education_Level', 'tenure']
@@ -70,7 +70,7 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
         submission_stream = obj.deployment.get_submissions(request.user.id, **filters)
         _list_by_gender = report_data.data_by_identifiers(obj, vnames_by_gender, split_by='Gender',
                                                 submission_stream=submission_stream)
-        
+
 
         aggregate_pipeline = [
             {
@@ -85,12 +85,12 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
                     'tenure': {
                         '$switch': {
                             'branches': [
-                                # {
-                                #     'case': {'$eq': ["$months_in_kebele", None]},
-                                #     'then': ""
-                                # },
                                 {
-                                    'case': {'$and': [ { '$gte' : ["$months_in_kebele", 0]}, { '$lt' : ["$months_in_kebele", 6]}]}, 
+                                    'case': {'$eq': ["$months_in_kebele", None]},
+                                    'then': None
+                                },
+                                {
+                                    'case': {'$and': [ { '$gte' : ["$months_in_kebele", 0]}, { '$lt' : ["$months_in_kebele", 6]}]},
                                     'then': "0 to 6 months"
                                 },
                                 {
@@ -111,14 +111,14 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
                     }
                 }
             }
-        ]   
+        ]
         submission_stream = obj.deployment.get_submissions(request.user.id, aggregate_pipeline=aggregate_pipeline, **filters)
         # print(list(submission_stream))
         # submission_stream = obj.deployment.get_submissions(request.user.id, **filters)
         _list = report_data.data_by_identifiers(obj, vnames, split_by=split_by,
                                                 submission_stream=submission_stream)
-        
-        
+
+
 
         return {
             'url': reverse('reports-detail', args=(obj.uid,), request=request),
