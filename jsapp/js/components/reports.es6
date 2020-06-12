@@ -45,7 +45,7 @@ class ChartTypePicker extends React.Component {
     this.props.onChange({
       default: true,
     }, {
-      report_type: e.currentTarget.value || 'bar'
+      report_type: e.currentTarget.value || 'horizontal'
     });
   }
   render () {
@@ -449,8 +449,8 @@ class ReportContents extends React.Component {
     var tnslIndex = 0;
     let customReport = this.props.parentState.currentCustomReport,
         defaultRS = this.props.parentState.reportStyles,
-        asset = this.props.parentState.asset,
-        groupBy = this.props.parentState.groupBy;
+        asset = this.props.parentState.asset;
+        // groupBy = this.props.parentState.groupBy;
 
     if (customReport) {
       if (customReport.reportStyle && customReport.reportStyle.translationIndex)
@@ -470,6 +470,7 @@ class ReportContents extends React.Component {
           _type = reportData[i].row.type || null;
 
       var _defSpec = undefined;
+      let groupBy = reportData[i].group_by
 
       if (customReport) {
         if (customReport.specified && customReport.specified[_qn])
@@ -521,11 +522,15 @@ class ReportContents extends React.Component {
         }
       }
 
+      //TODO: Find a better way to deal with graph type
       if(reportData[0])
         reportData[0].style.report_type = 'horizontal'
 
       if(reportData[1])
         reportData[1].style.report_type = 'donut'
+
+      if(reportData[2])
+        reportData[2].style.report_type = 'horizontal'
     }
 
     return (
@@ -546,6 +551,16 @@ class ReportContents extends React.Component {
             <ReportViewItem
               {...reportData[1]}
               label={t('Education Level')}
+              triggerQuestionSettings={this.props.triggerQuestionSettings} />
+          </bem.ReportView__item>
+        }
+        {
+          //Specialization graph
+          <bem.ReportView__item key={'tenure'}>
+            <ReportViewItem
+              {...reportData[2]}
+              label={t('DA Tenure in Current Kebele')}
+              percentage
               triggerQuestionSettings={this.props.triggerQuestionSettings} />
           </bem.ReportView__item>
         }
@@ -800,7 +815,7 @@ class Reports extends React.Component {
 
       // TODO: improve the defaults below
       if (reportStyles.default.report_type === undefined) {
-        reportStyles.default.report_type = 'vertical';
+        reportStyles.default.report_type = 'horizontal';
       }
       if (reportStyles.default.translationIndex === undefined) {
         reportStyles.default.translationIndex = 0;
@@ -832,6 +847,10 @@ class Reports extends React.Component {
                 row.row.label = t('untitled');
               }
               dataWithResponses.push(row);
+            }
+            if(row.name === 'tenure'){
+              row.data.show_graph = true
+              row.row.type = "select_one"
             }
           });
 

@@ -70,15 +70,18 @@ class ReportTable extends React.Component {
       if (this.props.rows.length > 0) {
         let rowsB = this.props.rows;
         if (this.props.responseLabels) {
-          th = th.concat(this.props.responseLabels);
+          rows = this.props.responseLabels.map((value) => [value])
         } else {
           if (rowsB[0] && rowsB[0][1] && rowsB[0][1].responses)
-            th = th.concat(rowsB[0][1].responses);
+            rows = rowsB[0][1].responses.map((value) => [value])
         }
         rowsB.map((row, i)=> {
-          var rowitem = row[2] ? [row[2]] : [row[0]];
-          rowitem = rowitem.concat(row[1].frequencies);
-          rows.push(rowitem);
+          let thitem = row[2] ? row[2] : row[0];
+          th.push(thitem);
+          row[1].frequencies.forEach((frequency, i) => rows[i].push(frequency))
+          // var rowitem = row[2] ? [row[2]] : [row[0]];
+          // rowitem = rowitem.concat(row[1].frequencies);
+          // rows.push(rowitem);
         });
       }
     }
@@ -265,8 +268,11 @@ class ReportViewItem extends React.Component {
         });
       }
     }
+    if(_this.props.percentage)
+      maxPercentage = maxPercentage < 85 ? ((parseInt(maxPercentage/10, 10)+1)*10) : 100;
+    else
+      maxPercentage = ((parseInt(maxPercentage/5, 5)+1)*5);
 
-    maxPercentage = maxPercentage < 85 ? ((parseInt(maxPercentage/5, 5)+1)*5) : 100;
     var opts = {
       type: chartType,
       data: {

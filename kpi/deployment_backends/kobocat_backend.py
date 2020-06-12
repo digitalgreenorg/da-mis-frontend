@@ -542,7 +542,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
         return url
 
     def get_submissions(self, requesting_user_id,
-                        format_type=INSTANCE_FORMAT_TYPE_JSON,
+                        format_type=INSTANCE_FORMAT_TYPE_JSON, aggregate_pipeline=None,
                         instance_ids=[], **kwargs):
         """
         Retrieves submissions through Postgres or Mongo depending on `format_type`.
@@ -568,7 +568,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
                                                       **kwargs)
 
         if format_type == INSTANCE_FORMAT_TYPE_JSON:
-            submissions = self.__get_submissions_in_json(**params)
+            submissions = self.__get_submissions_in_json(aggregate_pipeline, **params)
         elif format_type == INSTANCE_FORMAT_TYPE_XML:
             submissions = self.__get_submissions_in_xml(**params)
         else:
@@ -636,7 +636,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
                                                       **kwargs)
         return MongoHelper.get_count(self.mongo_userform_id, **params)
 
-    def __get_submissions_in_json(self, **params):
+    def __get_submissions_in_json(self, aggregate_pipeline=None, **params):
         """
         Retrieves instances directly from Mongo.
 
@@ -645,7 +645,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
         """
 
         instances, total_count = MongoHelper.get_instances(
-            self.mongo_userform_id, **params)
+            self.mongo_userform_id, aggregate_pipeline=aggregate_pipeline, **params)
 
         # Python-only attribute used by `kpi.views.v2.data.DataViewSet.list()`
         self.current_submissions_count = total_count
@@ -655,7 +655,7 @@ class KobocatDeploymentBackend(BaseDeploymentBackend):
             for instance in instances
         )
 
-    def __get_submissions_in_xml(self, **params):
+    def __get_submissions_in_xml(self, aggregate_pipeline=None, **params):
         """
         Retrieves instances directly from Postgres.
 

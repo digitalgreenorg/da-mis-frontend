@@ -8,6 +8,7 @@ from django.utils.translation import ugettext as _
 
 from kpi.constants import NESTED_MONGO_RESERVED_ATTRIBUTES
 from kpi.utils.strings import base64_encodestring
+from pymongo.command_cursor import CommandCursor
 
 
 class MongoHelper:
@@ -80,7 +81,7 @@ class MongoHelper:
     def get_instances(
             cls, mongo_userform_id, hide_deleted=True, start=None, limit=None,
             sort=None, fields=None, query=None, instance_ids=None,
-            permission_filters=None
+            permission_filters=None, aggregate_pipeline=None
     ):
         cursor, total_count = cls._get_cursor_and_count(
             mongo_userform_id,
@@ -88,9 +89,12 @@ class MongoHelper:
             fields=fields,
             query=query,
             instance_ids=instance_ids,
-            permission_filters=permission_filters)
+            permission_filters=permission_filters,
+            aggregate_pipeline=aggregate_pipeline)
 
-        cursor.skip(start)
+        if not isinstance(cursor, CommandCursor):
+            cursor.skip(start)
+            
         if limit is not None:
             cursor.limit(limit)
 
@@ -254,7 +258,7 @@ class MongoHelper:
     @classmethod
     def _get_cursor_and_count(cls, mongo_userform_id, hide_deleted=True,
                               fields=None, query=None, instance_ids=None,
-                              permission_filters=None):
+                              permission_filters=None, aggregate_pipeline=None):
         # check if query contains an _id and if its a valid ObjectID
         if '_uuid' in query:
             if ObjectId.is_valid(query.get('_uuid')):
@@ -298,8 +302,20 @@ class MongoHelper:
             # Retrieve all fields except `cls.USERFORM_ID`
             fields_to_select = {cls.USERFORM_ID: 0}
 
-        cursor = settings.MONGO_DB.instances.find(query, fields_to_select)
-        return cursor, cursor.count()
+        if aggregate_pipeline is None:
+            cursor = settings.MONGO_DB.instances.find(query, fields_to_select)
+            count = cursor.count()
+        else:
+            aggregate_pipeline.append({
+                '$match': query
+            })
+            cursor = settings.MONGO_DB.instances.aggregate(aggregate_pipeline)
+            aggregate_pipeline.append({
+                '$count': 'count'
+            })
+            countCursor = settings.MONGO_DB.instances.aggregate(aggregate_pipeline)
+            count = countCursor.next().get('count')
+        return cursor, count
 
     @classmethod
     def _is_attribute_encoded(cls, key):

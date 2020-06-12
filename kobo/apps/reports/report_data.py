@@ -165,6 +165,7 @@ def data_by_identifiers(asset, field_names=None, submission_stream=None,
             'data': stat,
             'kuid': identifier,
             'style': specified_styles.get(identifier, {}),
+            'group_by': split_by,
         }
 
     return [
