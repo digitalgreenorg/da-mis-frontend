@@ -380,7 +380,7 @@ class ReportViewItem extends React.Component {
           <h2>
             {p.label}
           </h2>
-          <bem.ReportView__headingMeta>
+          {/*<bem.ReportView__headingMeta>
             <span className='type'>
               {
                 t('Type: ') + _type + t('. ')
@@ -398,7 +398,7 @@ class ReportViewItem extends React.Component {
                 t('(# were without data.)').replace('#', d.not_provided)
               }
             </span>
-          </bem.ReportView__headingMeta>
+          </bem.ReportView__headingMeta>*/}
           {d.show_graph &&
             <button className='mdl-button mdl-button--icon report-button__question-settings'
                   onClick={this.props.triggerQuestionSettings}
