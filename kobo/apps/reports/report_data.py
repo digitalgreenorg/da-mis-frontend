@@ -120,7 +120,7 @@ def _vnames(asset, cache=False):
 def data_by_identifiers(asset, field_names=None, submission_stream=None,
                         report_styles=None, lang=None, fields=None,
                         split_by=None):
-    pack, submission_stream = build_formpack(asset, submission_stream)
+    pack, submission_stream = build_formpack(asset, submission_stream, use_all_form_versions=False)
     _all_versions = pack.versions.keys()
     report = pack.autoreport(versions=_all_versions)
     fields_by_name = OrderedDict([
