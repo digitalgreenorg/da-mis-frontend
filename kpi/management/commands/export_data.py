@@ -3,8 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 import xlwt
 
-from kpi.models import Region, Zone, Woreda, Kabele
-from kpi.views import GeographyChecker
+from kpi.models import Region, Zone, Woreda, Kebele
 
 
 class Command(BaseCommand):
@@ -54,13 +53,13 @@ class Command(BaseCommand):
                 sheet.write(i,4,woreda.zone.name)
                 i = i + 1
 
-            kabeles = Kabele.objects.all()
+            kebeles = Kebele.objects.all()
             i=i+1
-            for kabele in kabeles:
-                sheet.write(i,0,"kabele")
-                sheet.write(i,1,kabele.name)
-                sheet.write(i,2,kabele.label)
-                sheet.write(i,5,kabele.woreda.name)
+            for kebele in kebeles:
+                sheet.write(i,0,"kebele")
+                sheet.write(i,1,kebele.name)
+                sheet.write(i,2,kebele.label)
+                sheet.write(i,5,kebele.woreda.name)
                 i = i + 1
 
             workbook.save(filename+'.xls')

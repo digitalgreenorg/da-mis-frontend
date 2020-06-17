@@ -39,7 +39,7 @@ class Woreda(models.Model):
         unique_together = ("name", "zone")
 
 
-class Kabele(models.Model):
+class Kebele(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     label = models.CharField(max_length=100)

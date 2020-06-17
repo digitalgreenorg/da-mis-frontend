@@ -1,10 +1,7 @@
-import threading
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 import xlrd
 
-from kpi.models import Region, Zone, Woreda, Kabele
-from kpi.views import GeographyChecker
+from kpi.views.v2.geography import GeographyChecker
 
 
 class Command(BaseCommand):
@@ -17,7 +14,7 @@ class Command(BaseCommand):
 
     # generate the excel for the given command line arguments
     def handle(self, *args, **options):
-        if options.get('filename') != None:
+        if options.get('filename') is not None:
             filename = options.get('filename')
             wb = xlrd.open_workbook(filename)
             sheets = wb.sheet_names()
@@ -27,5 +24,5 @@ class Command(BaseCommand):
                     region = GeographyChecker().get_or_create_region(str(sheet_to_import.cell_value(row,1)))
                     zone = GeographyChecker().get_or_create_zone(str(sheet_to_import.cell_value(row,2)), region)
                     woreda = GeographyChecker().get_or_create_woreda(str(sheet_to_import.cell_value(row,3)), zone)
-                    kabele = GeographyChecker().get_or_create_kabele(str(sheet_to_import.cell_value(row,4)), woreda)
-                    print("Entry Saved - R:" + str(region) + "Z:" + str(zone) + "W:" + str(woreda) + "K:" + str(kabele))
+                    kebele = GeographyChecker().get_or_create_kabele(str(sheet_to_import.cell_value(row,4)), woreda)
+                    # print("Entry Saved - R:" + str(region) + "Z:" + str(zone) + "W:" + str(woreda) + "K:" + str(kebele))
