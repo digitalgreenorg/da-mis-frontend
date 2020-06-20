@@ -72,9 +72,12 @@ class LocationAccessForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LocationAccessForm, self).__init__(*args, **kwargs)
-        self.fields['zones'].queryset = Zone.objects.filter(region__in=self.instance.regions)
-        self.fields['woredas'].queryset = Woreda.objects.filter(zone__in=self.instance.zones)
-        self.fields['kebeles'].queryset = Kebele.objects.filter(woreda__in=self.instance.woredas)
+        try:
+            self.fields['zones'].queryset = Zone.objects.filter(region__in=self.instance.regions)
+            self.fields['woredas'].queryset = Woreda.objects.filter(zone__in=self.instance.zones)
+            self.fields['kebeles'].queryset = Kebele.objects.filter(woreda__in=self.instance.woredas)
+        except ValueError as e:
+            pass
 
 
 class LocationAccessAdmin(admin.ModelAdmin):
