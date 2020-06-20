@@ -65,7 +65,7 @@ class LocationAccess(models.Model):
     kebeles = models.ManyToManyField(Kebele, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.__str__()
 
 
 class LocationAccessForm(forms.ModelForm):
