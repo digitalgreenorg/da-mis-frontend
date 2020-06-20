@@ -68,6 +68,7 @@ class LocationAccess(models.Model):
 class LocationAccessForm(forms.ModelForm):
     class Meta:
         model = LocationAccess
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(LocationAccessForm, self).__init__(*args, **kwargs)
