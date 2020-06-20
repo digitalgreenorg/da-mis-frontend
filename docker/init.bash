@@ -48,7 +48,7 @@ echo "Copying static files to nginx volume..."
 rsync -aq --delete --chown=www-data "${KPI_SRC_DIR}/staticfiles/" "${NGINX_STATIC_DIR}/"
 
 echo "Importing locations"
-python manage.py import_data -f locations.xlsx
+python manage.py import_data -f './locations.xlsx'
 
 if [[ ! -d "${KPI_SRC_DIR}/locale" ]] || [[ -z "$(ls -A ${KPI_SRC_DIR}/locale)" ]]; then
     echo "Fetching translations..."
