@@ -79,5 +79,5 @@ class LocationAccessForm(forms.ModelForm):
 
 class LocationAccessAdmin(admin.ModelAdmin):
     form = LocationAccessForm
-    filter_horizontal = ['zones', 'woredas', 'kebele']
+    filter_horizontal = ['zones', 'woredas', 'kebeles']
 
