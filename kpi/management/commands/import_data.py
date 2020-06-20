@@ -25,6 +25,6 @@ class Command(BaseCommand):
                     zone = GeographyChecker().get_or_create_zone(str(sheet_to_import.cell_value(row,2)), region)
                     woreda = GeographyChecker().get_or_create_woreda(str(sheet_to_import.cell_value(row,3)), zone)
                     kebele = GeographyChecker().get_or_create_kabele(str(sheet_to_import.cell_value(row,4)), woreda)
-                    print("Entry Saved - R:" + str(region) + "Z:" + str(zone) + "W:" + str(woreda) + "K:" + str(kebele))
+                    # print("Entry Saved - R:" + str(region) + "Z:" + str(zone) + "W:" + str(woreda) + "K:" + str(kebele))
             print("Imported Locations successfully")
 
