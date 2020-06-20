@@ -58,11 +58,14 @@ class Kebele(models.Model):
 class LocationAccess(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='location_access',
-                                on_delete=models.CASCADE)
-    regions = models.ManyToManyField(Region, null=True)
-    zones = models.ManyToManyField(Zone, null=True)
-    woredas = models.ManyToManyField(Woreda, null=True)
-    kebeles = models.ManyToManyField(Kebele, null=True)
+                                on_delete=models.CASCADE, primary_key=True)
+    regions = models.ManyToManyField(Region, null=True, blank=True)
+    zones = models.ManyToManyField(Zone, null=True, blank=True)
+    woredas = models.ManyToManyField(Woreda, null=True, blank=True)
+    kebeles = models.ManyToManyField(Kebele, null=True, blank=True)
+
+    def __str__(self):
+        return self.user
 
 
 class LocationAccessForm(forms.ModelForm):
