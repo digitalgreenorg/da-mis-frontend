@@ -59,10 +59,10 @@ class LocationAccess(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='location_access',
                                 on_delete=models.CASCADE)
-    regions = models.ManyToManyField(Region)
-    zones = models.ManyToManyField(Zone)
-    woredas = models.ManyToManyField(Woreda)
-    kebeles = models.ManyToManyField(Kebele)
+    regions = models.ManyToManyField(Region, null=True)
+    zones = models.ManyToManyField(Zone, null=True)
+    woredas = models.ManyToManyField(Woreda, null=True)
+    kebeles = models.ManyToManyField(Kebele, null=True)
 
 
 class LocationAccessForm(forms.ModelForm):
@@ -72,15 +72,15 @@ class LocationAccessForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(LocationAccessForm, self).__init__(*args, **kwargs)
-        try:
-            self.fields['zones'].queryset = Zone.objects.filter(region__in=self.instance.regions)
-            self.fields['woredas'].queryset = Woreda.objects.filter(zone__in=self.instance.zones)
-            self.fields['kebeles'].queryset = Kebele.objects.filter(woreda__in=self.instance.woredas)
-        except ValueError as e:
-            pass
+        # try:
+        #     self.fields['zones'].queryset = Zone.objects.filter(region__in=self.instance.regions)
+        #     self.fields['woredas'].queryset = Woreda.objects.filter(zone__in=self.instance.zones)
+        #     self.fields['kebeles'].queryset = Kebele.objects.filter(woreda__in=self.instance.woredas)
+        # except ValueError as e:
+        #     pass
 
 
 class LocationAccessAdmin(admin.ModelAdmin):
     form = LocationAccessForm
-    filter_horizontal = ['zones', 'woredas', 'kebeles']
+    filter_horizontal = ['regions', 'zones', 'woredas', 'kebeles']
 
