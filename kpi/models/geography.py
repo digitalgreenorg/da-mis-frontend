@@ -59,10 +59,10 @@ class LocationAccess(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 related_name='location_access',
                                 on_delete=models.CASCADE, primary_key=True)
-    regions = models.ManyToManyField(Region, null=True, blank=True)
-    zones = models.ManyToManyField(Zone, null=True, blank=True)
-    woredas = models.ManyToManyField(Woreda, null=True, blank=True)
-    kebeles = models.ManyToManyField(Kebele, null=True, blank=True)
+    regions = models.ManyToManyField(Region, blank=True)
+    zones = models.ManyToManyField(Zone, blank=True)
+    woredas = models.ManyToManyField(Woreda, blank=True)
+    kebeles = models.ManyToManyField(Kebele, blank=True)
 
     def __str__(self):
         return self.user
