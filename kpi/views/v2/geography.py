@@ -4,7 +4,7 @@ from kpi.models import Region, Zone, Woreda, Kebele
 class GeographyChecker():
 
     def get_or_create_region(self, label):
-        region = Region.objects.filter(label=label)
+        region = Region.objects.filter(name=label.strip().lower())
         if region.count() > 0:
             return region[0]
         else:
