@@ -57,7 +57,7 @@ class Kebele(models.Model):
 
 class LocationAccess(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                related_name='extra_details',
+                                related_name='location_access',
                                 on_delete=models.CASCADE)
     regions = models.ManyToManyField(Region)
     zones = models.ManyToManyField(Zone)
