@@ -13,7 +13,7 @@ class GeographyChecker():
             return region
 
     def get_or_create_zone(self, label, region):
-        zone = Zone.objects.filter(label=label, region=region)
+        zone = Zone.objects.filter(name=label.strip().lower(), region=region)
         if zone.count() > 0:
             return zone[0]
         else:
@@ -22,7 +22,7 @@ class GeographyChecker():
             return zone
 
     def get_or_create_woreda(self, label, zone):
-        woreda = Woreda.objects.filter(label=label, zone=zone)
+        woreda = Woreda.objects.filter(name=label.strip().lower(), zone=zone)
         if woreda.count() > 0:
             return woreda[0]
         else:
@@ -31,7 +31,7 @@ class GeographyChecker():
             return woreda
 
     def get_or_create_kabele(self, label, woreda):
-        kabele = Kebele.objects.filter(label=label, woreda=woreda)
+        kabele = Kebele.objects.filter(name=label.strip().lower(), woreda=woreda)
         if kabele.count() > 0:
             return kabele[0]
         else:
