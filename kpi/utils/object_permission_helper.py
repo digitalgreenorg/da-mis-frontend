@@ -116,10 +116,18 @@ class ObjectPermissionHelper:
         def _get_list_names(values):
             return [value.name for value in values]
 
-        query["Region"] = {"$in": _get_list_names(location_access[0].regions.all())}
-        # query["Zone"] = {"$in": _get_list_names(location_access[0].zones.all())}
-        # query["Woreda"] = {"$in": _get_list_names(location_access[0].woredas.all())}
-        # query["Kebele"] = {"$in": _get_list_names(location_access[0].kebeles.all())}
+        regions = _get_list_names(location_access[0].regions.all())
+        zones = _get_list_names(location_access[0].zones.all())
+        woredas = _get_list_names(location_access[0].woredas.all())
+        kebeles = _get_list_names(location_access[0].kebeles.all())
+        if len(regions) > 0:
+            query["Region"] = {"$in": regions}
+        if len(zones) > 0:
+            query["Zone"] = {"$in": zones}
+        if len(woredas) > 0:
+            query["Woreda"] = {"$in": woredas}
+        if len(kebeles) > 0:
+            query["Kebele"] = {"$in": kebeles}
         filters['query'] = query
         print(filters)
         return filters
