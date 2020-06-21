@@ -117,9 +117,9 @@ class ObjectPermissionHelper:
             return [value.label for value in values]
 
         query["Region"] = {"$in": _get_list_names(location_access[0].regions.all())}
-        query["Zone"] = {"$in": _get_list_names(location_access[0].zones.all())}
-        query["Woreda"] = {"$in": _get_list_names(location_access[0].woredas.all())}
-        query["Kebele"] = {"$in": _get_list_names(location_access[0].kebeles.all())}
+        # query["Zone"] = {"$in": _get_list_names(location_access[0].zones.all())}
+        # query["Woreda"] = {"$in": _get_list_names(location_access[0].woredas.all())}
+        # query["Kebele"] = {"$in": _get_list_names(location_access[0].kebeles.all())}
         filters['query'] = query
         print(filters)
         return filters
