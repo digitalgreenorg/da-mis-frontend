@@ -2,6 +2,7 @@
 from django.conf import settings
 
 from kpi.constants import PERM_SHARE_SUBMISSIONS, PERM_FROM_KC_ONLY
+from kpi.models.geography import LocationAccess
 
 
 class ObjectPermissionHelper:
@@ -101,3 +102,19 @@ class ObjectPermissionHelper:
                 user_permission_assignments.append(permission_assignment)
 
         return user_permission_assignments
+
+    @staticmethod
+    def get_location_filter(filters, user_id):
+        if "query" in filters:
+            query = filters["query"]
+        else:
+            query = {}
+        location_access = LocationAccess.objects.filter(user_id=user_id)
+        if len(location_access) == 0:
+            return filters
+        query["Region"] = {"$in": location_access[0].regions}
+        query["Zone"] = {"$in": location_access[0].zones}
+        query["Woreda"] = {"$in": location_access[0].woredas}
+        query["Kebele"] = {"$in": location_access[0].kebeles}
+        filters['query'] = query
+        return filters

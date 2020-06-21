@@ -18,7 +18,7 @@ from kpi.permissions import (
 )
 from kpi.renderers import SubmissionGeoJsonRenderer, SubmissionXMLRenderer
 from kpi.utils.viewset_mixins import AssetNestedObjectViewsetMixin
-
+from kpi.utils.object_permission_helper import ObjectPermissionHelper
 
 class DataViewSet(AssetNestedObjectViewsetMixin, NestedViewSetMixin,
                   viewsets.GenericViewSet):
@@ -137,7 +137,7 @@ class DataViewSet(AssetNestedObjectViewsetMixin, NestedViewSetMixin,
 
     Update current submission
 
-    _It is not possible to update a submission directly with `kpi`'s API as this is handled by `kobocat`'s `/submissions` endpoint. 
+    _It is not possible to update a submission directly with `kpi`'s API as this is handled by `kobocat`'s `/submissions` endpoint.
     Instead, it returns the URL where the instance can be opened in Enketo for editing in the UI._
 
     <pre class="prettyprint">
@@ -345,5 +345,5 @@ class DataViewSet(AssetNestedObjectViewsetMixin, NestedViewSetMixin,
             raise serializers.ValidationError(
                 {'limit': _('A positive integer is required')}
             )
-
+        filters = ObjectPermissionHelper.get_location_filter(filters, request.user.id)
         return filters

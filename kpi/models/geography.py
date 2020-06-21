@@ -73,8 +73,8 @@ class LocationAccessForm(forms.ModelForm):
         model = LocationAccess
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(LocationAccessForm, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     super(LocationAccessForm, self).__init__(*args, **kwargs)
         # try:
         #     self.fields['zones'].queryset = Zone.objects.filter(region__in=self.instance.regions)
         #     self.fields['woredas'].queryset = Woreda.objects.filter(zone__in=self.instance.zones)
