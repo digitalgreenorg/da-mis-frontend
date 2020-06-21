@@ -114,7 +114,7 @@ class ObjectPermissionHelper:
             return filters
 
         def _get_list_names(values):
-            return map(lambda value: value.name, values)
+            return map(lambda value: value.name, list(values))
 
         query["Region"] = {"$in": _get_list_names(location_access[0].regions)}
         query["Zone"] = {"$in": _get_list_names(location_access[0].zones)}
