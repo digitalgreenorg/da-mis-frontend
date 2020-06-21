@@ -112,10 +112,14 @@ class ObjectPermissionHelper:
         location_access = LocationAccess.objects.filter(user_id=user_id)
         if len(location_access) == 0:
             return filters
-        query["Region"] = {"$in": location_access[0].regions}
-        query["Zone"] = {"$in": location_access[0].zones}
-        query["Woreda"] = {"$in": location_access[0].woredas}
-        query["Kebele"] = {"$in": location_access[0].kebeles}
+
+        def _get_list_names(values):
+            return map(lambda value: value.name, values)
+
+        query["Region"] = {"$in": _get_list_names(location_access[0].regions)}
+        query["Zone"] = {"$in": _get_list_names(location_access[0].zones)}
+        query["Woreda"] = {"$in": _get_list_names(location_access[0].woredas)}
+        query["Kebele"] = {"$in": _get_list_names(location_access[0].kebeles)}
         filters['query'] = query
         print(filters)
         return filters
