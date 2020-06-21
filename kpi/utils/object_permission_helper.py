@@ -120,13 +120,13 @@ class ObjectPermissionHelper:
         zones = _get_list_names(location_access[0].zones.all())
         woredas = _get_list_names(location_access[0].woredas.all())
         kebeles = _get_list_names(location_access[0].kebeles.all())
-        if len(regions) > 0:
+        if len(regions) > 0 and "Region" not in query:
             query["Region"] = {"$in": regions}
-        if len(zones) > 0:
+        if len(zones) > 0 and "Zone" not in query:
             query["Zone"] = {"$in": zones}
-        if len(woredas) > 0:
+        if len(woredas) > 0 and "Woreda" not in query:
             query["Woreda"] = {"$in": woredas}
-        if len(kebeles) > 0:
+        if len(kebeles) > 0 and "Kebele" not in query:
             query["Kebele"] = {"$in": kebeles}
         filters['query'] = query
         print(filters)

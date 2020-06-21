@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 
 from kobo.apps.reports import report_data
 from datetime import datetime
+from kpi.utils.object_permission_helper import ObjectPermissionHelper
 
 class ReportsListSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
@@ -26,7 +27,7 @@ class ReportsDetailSerializer(serializers.BaseSerializer):
         filters = {}
         if 'query' in request.query_params:
             filters['query'] = request.query_params['query']
-
+        filters = ObjectPermissionHelper.get_location_filter(filters, request.user.id)
         split_by = request.query_params.get('split_by', None)
 
         def dateFromString(param):
