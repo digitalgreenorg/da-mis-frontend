@@ -117,4 +117,5 @@ class ObjectPermissionHelper:
         query["Woreda"] = {"$in": location_access[0].woredas}
         query["Kebele"] = {"$in": location_access[0].kebeles}
         filters['query'] = query
+        print(filters)
         return filters
