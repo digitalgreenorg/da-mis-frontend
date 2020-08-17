@@ -29,9 +29,6 @@ import {
 
 import SidebarFormsList from '../lists/sidebarForms';
 
-
-const BUTTONS_LABELS = [t('new da entry'), t('new sms entry')]
-
 class FormSidebar extends Reflux.Component {
   constructor(props){
     super(props);
@@ -45,6 +42,9 @@ class FormSidebar extends Reflux.Component {
       stores.pageState
     ];
     autoBind(this);
+  }
+  componentDidMount() {
+    this.searchSemaphore()
   }
   componentWillMount() {
     this.setStates();
@@ -80,9 +80,11 @@ class FormSidebar extends Reflux.Component {
   }
   renderButtons(){
     return(
-      this.state.assets && this.state.assets.map((value, i) => 
+      this.state.assets && this.state.assets
+        .sort((a, b) =>  new Date(a.date_created).getTime() - new Date(b.date_created).getTime())
+        .map((value, i) =>
       <a href={value.deployment__links.offline_url} target='_blank' className='new-entry-button mdl-button mdl-button--raised mdl-button--colored'>
-        {BUTTONS_LABELS[i]}
+        {'new '+value.name.split(' ')[0]+' entry'}
       </a>)
     );
   }
@@ -99,7 +101,7 @@ class FormSidebar extends Reflux.Component {
           <SidebarFormsList/>
           </>
         }
-        {  this.userIsStaff() &&  
+        {  this.userIsStaff() &&
             <a href='/admin/auth/user/add/' target='_blank' className='new-user-button mdl-button mdl-button--raised mdl-button--colored'>
             {t('new user')}
             </a>
@@ -182,6 +184,11 @@ class Drawer extends Reflux.Component {
       stores.serverEnvironment,
     ];
   }
+
+  componentDidMount(){
+    this.searchSemaphore();
+  }
+
   render () {
     return (
       <bem.KDrawer>
